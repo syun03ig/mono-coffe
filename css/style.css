@@ -1,0 +1,239 @@
+/* --- 1. 全体設定 --- */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 滑らかなスクロールはhtmlに指定するのが正解 */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+  font-family: "Zen Old Mincho", serif;
+  background-color: #fcfaf5;
+  background-image: radial-gradient(#e0ddd5 0.5px, transparent 0.5px);
+  background-size: 20px 20px;
+  color: #333;
+}
+
+/* --- 2. ヘッダー（常に三本線モード） --- */
+header {
+  text-align: center;
+  padding: 40px 20px;
+  background-color: #2b2b2b;
+  color: #fcfaf5;
+  border-bottom: 2px solid #d4af37;
+  position: relative;
+}
+
+header h1 a {
+  color: #d4af37;
+  text-decoration: none;
+}
+
+/* 三本線は常に表示 */
+.menu-icon {
+  display: block; 
+  font-size: 1.5rem;
+  color: #d4af37;
+  cursor: pointer;
+  position: absolute;
+  top: 40px;
+  right: 20px;
+}
+
+/* メニューは常に隠しパネル形式 */
+nav ul {
+  list-style: none;
+  display: none; 
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: #2b2b2b;
+  padding: 20px 0;
+  z-index: 1000;
+  margin: 0;
+}
+
+/* メニューの黒点を消して、余白を調整する */
+.menu-list {
+  list-style: none; /* これで黒点が消えます */
+  padding: 0;       /* 左側の余計な隙間をなくします */
+}
+
+/* ついでにメニューの各行を少しオシャレにする設定 */
+.menu-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.menu-list .line {
+  flex: 1;
+  border-bottom: 1px dotted #ccc; /* 名前と値段の間の点線 */
+  margin: 0 10px;
+}
+
+nav ul.active {
+  display: flex;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  display: block;
+  padding: 10px 0;
+}
+
+/* --- 3. メインレイアウト --- */
+.hero {
+  height: 60vh;
+  /* 画像を少し暗くするフィルター（0.3の部分）を追加 */
+  background-image: 
+    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
+    url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=1000');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+/* 文字をクッキリさせる設定を追加 */
+.hero-content p {
+  font-size: 1.24rem;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* 影を強めにつけて文字を浮かす */
+  margin: 0;
+  font-weight: bold;
+}
+
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+
+/* AboutもPC・スマホ問わず縦並び */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-image img {
+  width: 100%;
+  max-width: 350px;
+  border-radius: 10px;
+}
+
+.about-text {
+  text-align: center;
+}
+
+/* --- 4. フッター --- */
+footer {
+  background-color: #2b2b2b;
+  color: #fff;
+  padding: 60px 20px;
+  text-align: center;
+}
+.sns-links a { color: #fff; margin: 0 15px; font-size: 1.5rem; }
+
+/* メニューの各行を横並びにする */
+.menu-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  list-style: none; /* 黒丸を確実に消す */
+}
+
+/* 画像を小さく丸くする */
+.menu-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%; /* 丸くする */
+  margin-right: 15px;
+  flex-shrink: 0; /* 画像が潰れないようにする */
+}
+
+/* テキスト部分を整える */
+.menu-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* --- 5. メニューページ専用のレイアウト --- */
+.menu-page {
+  max-width: 600px;    /* 👈 ページの横幅を読みやすく制限 */
+  margin: 0 auto;      /* 👈 これで画面の真ん中にドスンと配置 */
+  padding: 40px 20px;  /* 👈 上下に少しゆとりを持たせる */
+  text-align: left;    /* 👈 中身は左揃えにして読みやすくする */
+}
+
+/* タイトル（Menu）だけは真ん中に */
+.menu-page h2 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* カテゴリー名（Coffee / Sweets）を少し強調 */
+.menu-category h3 {
+  border-bottom: 2px solid #2b2b2b;
+  margin: 30px 0 20px;
+  padding-bottom: 5px;
+  font-size: 1.4rem;
+}
+
+/* 背景に足跡を置くための設定 */
+body {
+    position: relative;
+    overflow-x: hidden;
+}
+
+body::before, body::after {
+    content: "🐾"; /* 足跡の絵文字 */
+    position: fixed;
+    font-size: 50px;
+    opacity: 0.5; /* 薄くして目立たせすぎないのがコツ */
+    z-index: -1;   /* メニューの裏側に配置 */
+    transform: rotate(-20deg);
+}
+
+/* 右上の足跡 */
+body::before {
+    top: 50px;
+    right: 30px;
+    transform: rotate(20deg); /* 右向きに傾ける */
+}
+
+/* 左下の足跡 */
+body::after {
+    bottom: 80px;
+    left: 20px;
+    transform: rotate(-15deg); /* 左向きに傾ける */
+}
+
+/* Newsセクションを少しオシャレにする */
+.news li {
+  display: flex;
+  transition: 0.3s; /* マウスを乗せた時にふわっとさせる */
+}
+
+.news li:hover {
+  background-color: rgba(212, 175, 55, 0.1); /* ゴールドを薄く背景に */
+  padding-left: 10px; /* 少し右に動く */
+}
