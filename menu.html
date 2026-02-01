@@ -5,7 +5,7 @@
   <title>Menu - MONO COFFEE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,9 +23,11 @@
       <div class="menu-icon"><i class="fa-solid fa-bars"></i></div>
       <ul>
         <li><a href="index.html">Top</a></li>
+        <li><a href="concept.html">Concept</a></li>
         <li><a href="index.html#about">About</a></li>
         <li><a href="menu.html">Menu</a></li>
         <li><a href="access.html">Access</a></li>
+        <li><a href="reservation.html">Reservation</a></li>
       </ul>
     </nav>
     <p>白と黒、静かな時間を楽しむカフェ</p>
@@ -39,20 +41,20 @@
         <h3>Coffee</h3>
         <ul class="menu-list">
           <li>
-        <img src="images/coffee1.jpg" alt="モノ・ブレンド" class="menu-thumb">
-      <div class="menu-info">
-      <span class="name">モノ・ブレンド</span>
-      <span class="line"></span>
-      <span class="price">¥550</span>
-          </div>
-         </li>
+            <img src="images/coffee1.jpg" alt="モノ・ブレンド" class="menu-thumb">
+            <div class="menu-info">
+              <span class="name">モノ・ブレンド</span>
+              <span class="line"></span>
+              <span class="price">¥550</span>
+            </div>
+            </li>
           <li>
-           <img src="images/latte.jpg" alt="白黒ラテ" class="menu-thumb">
-           <div class="menu-info">
-           <span class="name">白黒ラテ（ゼブラ）</span>
-           <span class="line"></span>
-           <span class="price">¥650</span>
-          </div>
+            <img src="images/latte.jpg" alt="白黒ラテ" class="menu-thumb">
+            <div class="menu-info">
+              <span class="name">白黒ラテ（ゼブラ）</span>
+              <span class="line"></span>
+              <span class="price">¥650</span>
+            </div>
           </li>
           <li>
             <img src="images/float.jpg" alt="パンダ・フロート" class="menu-thumb">
@@ -113,6 +115,9 @@
     <p>&copy; MONO COFFEE</p>
   </footer>
 
-  <script src="js/script.js"></script>
-</body>
-</html>
+  <div id="modalOverlay" class="modal-overlay">
+    <span class="modal-close">&times;</span>
+    <img id="modalImg" class="modal-content" src="" alt="拡大画像">
+  </div> <script src="js/script.js"></script> 
+  </body>
+  </html>

@@ -3,7 +3,6 @@
   box-sizing: border-box;
 }
 
-/* 滑らかなスクロールはhtmlに指定するのが正解 */
 html {
   scroll-behavior: smooth;
 }
@@ -13,17 +12,29 @@ body {
   padding: 0;
   overflow-x: hidden;
   width: 100%;
-  font-family: "Zen Old Mincho", serif;
+  font-family: "M PLUS Rounded 1c", sans-serif; 
   background-color: #fcfaf5;
   background-image: radial-gradient(#e0ddd5 0.5px, transparent 0.5px);
   background-size: 20px 20px;
   color: #333;
+  position: relative; /* 足跡の基準 */
 }
 
-/* --- 2. ヘッダー（常に三本線モード） --- */
+/* 足跡（共通設定） */
+body::before, body::after {
+  content: "🐾";
+  position: fixed;
+  font-size: 50px;
+  opacity: 0.15; /* 少し薄くするとより上品になります */
+  z-index: -1;
+}
+body::before { top: 50px; right: 30px; transform: rotate(20deg); }
+body::after { bottom: 80px; left: 20px; transform: rotate(-15deg); }
+
+/* --- 2. ヘッダー --- */
 header {
   text-align: center;
-  padding: 40px 20px;
+  padding: 50px 20px;
   background-color: #2b2b2b;
   color: #fcfaf5;
   border-bottom: 2px solid #d4af37;
@@ -35,18 +46,17 @@ header h1 a {
   text-decoration: none;
 }
 
-/* 三本線は常に表示 */
 .menu-icon {
   display: block; 
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   color: #d4af37;
   cursor: pointer;
   position: absolute;
-  top: 40px;
-  right: 20px;
+  top: 45px;
+  right: 25px;
 }
 
-/* メニューは常に隠しパネル形式 */
+/* ナビゲーション */
 nav ul {
   list-style: none;
   display: none; 
@@ -60,58 +70,125 @@ nav ul {
   z-index: 1000;
   margin: 0;
 }
-
-/* メニューの黒点を消して、余白を調整する */
-.menu-list {
-  list-style: none; /* これで黒点が消えます */
-  padding: 0;       /* 左側の余計な隙間をなくします */
-}
-
-/* ついでにメニューの各行を少しオシャレにする設定 */
-.menu-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.menu-list .line {
-  flex: 1;
-  border-bottom: 1px dotted #ccc; /* 名前と値段の間の点線 */
-  margin: 0 10px;
-}
-
-nav ul.active {
-  display: flex;
-}
-
+nav ul.active { display: flex; }
+/* --- 2. ヘッダー（ナビゲーション部分） --- */
 nav a {
   text-decoration: none;
   color: #fff;
   font-weight: bold;
   display: block;
-  padding: 10px 0;
+  padding: 15px 0; /* 少し押しやすく広げました */
+  transition: all 0.3s ease; /* 変化をふわっとさせる */
 }
 
-/* --- 3. メインレイアウト --- */
+/* ★ここから追加：カーソルを合わせた時の強調 */
+nav a:hover {
+  background-color: rgba(212, 175, 55, 0.2); /* ゴールドを薄く背景に */
+  color: #d4af37; /* 文字色をゴールドに */
+  padding-left: 20px; /* 少し右に動いて「選んでる感」を出す */
+}
+
+/* --- 変更：.hero の背景指定を消して、スライド用の設定にする --- */
 .hero {
   height: 60vh;
-  /* 画像を少し暗くするフィルター（0.3の部分）を追加 */
-  background-image: 
-    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), 
-    url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=1000');
-  background-size: cover;
-  background-position: center;
+  position: relative; /* 子要素のスライドを重ねるための基準 */
+  overflow: hidden;   /* はみ出た画像を隠す */
   display: flex;
   align-items: center;
   justify-content: center;
   color: #fff;
 }
 
-/* 文字をクッキリさせる設定を追加 */
+/* スライド全体を広げる */
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
+/* 各スライドの設定 */
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  opacity: 0; /* 最初は隠す */
+  transition: opacity 1.5s ease-in-out; /* ふわっと切り替わる */
+}
+
+.slide.active {
+  opacity: 1; /* activeクラスがついた時だけ表示 */
+}
+
+/* スライド個別に色を重ねるのではなく、親要素(slider)に1枚だけ重ねる */
+.slider::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0); /* ここで全体の暗さを調整 */
+  z-index: 2; /* スライド画像(z-index:1)より上に重ねる */
+  pointer-events: none; /* 下にあるボタンを押せるようにする */
+}
+
+/* 元の .slide::before は削除するか、中身を空にしてください */
+.slide::before {
+  display: none;
+}
+
+/* --- ここからは元のデザインを維持！ --- */
+.hero-content {
+  position: relative;
+  z-index: 2; /* スライドより上に文字を出す */
+}
+
 .hero-content p {
   font-size: 1.24rem;
   letter-spacing: 0.1em;
-  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* 影を強めにつけて文字を浮かす */
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+  margin: 0;
+  font-weight: bold;
+}
+
+/* 矢印ボタンのデザイン（新しく追加） */
+.slider-prev, .slider-next {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 3;
+  transition: 0.3s;
+}
+
+.slider-prev:hover, .slider-next:hover {
+  background: rgba(212, 175, 55, 0.8);
+}
+.slider-prev { left: 20px; }
+.slider-next { right: 20px; }
+
+/* 以下の section や .container はそのままでOK！ */
+section {
+  padding: 60px 20px;
+  text-align: center;
+}
+/* ...以下略... */
+
+.hero-content p {
+  font-size: 1.24rem;
+  letter-spacing: 0.1em;
+  text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
   margin: 0;
   font-weight: bold;
 }
@@ -121,28 +198,85 @@ section {
   text-align: center;
 }
 
-/* AboutもPC・スマホ問わず縦並び */
 .container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 20px;
   max-width: 900px;
   margin: 0 auto;
+  gap: 20px;
 }
 
 .about-image img {
   width: 100%;
-  max-width: 350px;
+  max-width: 720px;
   border-radius: 10px;
 }
 
-.about-text {
-  text-align: center;
+/* --- 4. ニュースセクション --- */
+.news ul {
+  list-style: none;
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: left;
 }
 
-/* --- 4. フッター --- */
+.news li {
+  display: flex;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 5px;
+  transition: 0.3s;
+}
+
+.news li:hover {
+  background-color: rgba(212, 175, 55, 0.1);
+  padding-left: 10px;
+}
+
+/* --- 5. メニューレイアウト共通 --- */
+/* 肉球アイコンに一括で隙間を作る */
+.menu-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin-right: 15px;
+  flex-shrink: 0;
+}
+.fa-paw {
+  margin-right: 10px;
+}
+
+/* メニューのリストを整える */
+.menu-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  width: 100%; /* 横幅いっぱい使う */
+}
+
+/* 点線をより安定させる */
+.menu-info {
+  flex: 1;
+  display: flex;
+  align-items: baseline; /* 文字の高さに合わせる */
+}
+
+.menu-list .line {
+  flex: 1;
+  border-bottom: 1px dotted #ccc;
+  margin: 0 10px;
+  height: 1px; /* 高さを固定 */
+  align-self: center; /* 中央に配置 */
+}
+
+/* 値段を少し強調 */
+.price {
+  font-weight: bold;
+}
+/* --- 6. フッター --- */
 footer {
   background-color: #2b2b2b;
   color: #fff;
@@ -151,89 +285,136 @@ footer {
 }
 .sns-links a { color: #fff; margin: 0 15px; font-size: 1.5rem; }
 
-/* メニューの各行を横並びにする */
-.menu-list li {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-  list-style: none; /* 黒丸を確実に消す */
+/* --- 写真拡大（モーダル）の設定 --- */
+/* 背景：画面全体を覆う黒い膜 */
+.modal-overlay {
+  display: none; /* 普段は隠す */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9); /* 背景を暗く */
+  z-index: 2000; /* ヘッダーよりも上に表示 */
+  cursor: pointer;
 }
 
-/* 画像を小さく丸くする */
+/* 拡大画像 */
+.modal-content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 90%;
+  max-height: 80%;
+  border: 3px solid #fff;
+  border-radius: 8px;
+}
+
+/* 右上の×ボタン */
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* メニュー画像にマウスを乗せた時に「押せる」と分からせる */
 .menu-thumb {
-  width: 60px;
-  height: 60px;
-  object-fit: cover;
-  border-radius: 50%; /* 丸くする */
-  margin-right: 15px;
-  flex-shrink: 0; /* 画像が潰れないようにする */
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.menu-thumb:hover {
+  opacity: 0.8;
+}
+/* 予約・カレンダーページのレイアウト */
+.reservation-page .container {
+  display: grid;
+  grid-template-columns: 1fr; /* スマホでは縦並び */
+  gap: 30px;
+  margin-top: 40px;
 }
 
-/* テキスト部分を整える */
-.menu-info {
-  flex: 1;
-  display: flex;
-  align-items: center;
+/* PCサイズでは横に並べる */
+@media (min-width: 768px) {
+  .reservation-page .container {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
-/* --- 5. メニューページ専用のレイアウト --- */
-.menu-page {
-  max-width: 600px;    /* 👈 ページの横幅を読みやすく制限 */
-  margin: 0 auto;      /* 👈 これで画面の真ん中にドスンと配置 */
-  padding: 40px 20px;  /* 👈 上下に少しゆとりを持たせる */
-  text-align: left;    /* 👈 中身は左揃えにして読みやすくする */
+.reserve-card, .calendar-card {
+  background: #fff;
+  padding: 40px 20px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
 }
 
-/* タイトル（Menu）だけは真ん中に */
-.menu-page h2 {
+.reserve-button {
+  display: inline-block;
+  background-color: #2b2b2b;
+  color: #d4af37;
+  border: 2px solid #d4af37;
+  padding: 15px 40px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  margin-top: 20px;
+  transition: 0.3s;
+}
+
+.reserve-button:hover {
+  background-color: #d4af37;
+  color: #fff;
+}
+/* --- 7. カレンダー詳細デザイン --- */
+.calendar-card {
   text-align: center;
-  margin-bottom: 40px;
 }
 
-/* カテゴリー名（Coffee / Sweets）を少し強調 */
-.menu-category h3 {
-  border-bottom: 2px solid #2b2b2b;
-  margin: 30px 0 20px;
-  padding-bottom: 5px;
-  font-size: 1.4rem;
+.calendar-table {
+  width: 100%;
+  max-width: 320px; /* 少しスリムにして可愛く */
+  margin: 20px auto 0;
+  border-collapse: separate;
+  border-spacing: 6px; /* 日付の間に隙間を作る */
 }
 
-/* 背景に足跡を置くための設定 */
-body {
-    position: relative;
-    overflow-x: hidden;
+.calendar-table th {
+  padding: 5px 0;
+  font-size: 0.85rem;
+  color: #888;
+  font-weight: normal;
 }
 
-body::before, body::after {
-    content: "🐾"; /* 足跡の絵文字 */
-    position: fixed;
-    font-size: 50px;
-    opacity: 0.5; /* 薄くして目立たせすぎないのがコツ */
-    z-index: -1;   /* メニューの裏側に配置 */
-    transform: rotate(-20deg);
+.calendar-table td {
+  padding: 10px 0;
+  background-color: #f9f9f9; /* ほんのりグレーの箱 */
+  border-radius: 10px; /* 角を丸くしてパンダ感を出す */
+  font-size: 0.9rem;
+  transition: 0.3s;
 }
 
-/* 右上の足跡 */
-body::before {
-    top: 50px;
-    right: 30px;
-    transform: rotate(20deg); /* 右向きに傾ける */
+/* 定休日のデザイン */
+.calendar-table .off {
+  background-color: #fffaf0; /* 休みは少し色を変える */
+  color: #d4af37;
+  font-weight: bold;
+  position: relative;
 }
 
-/* 左下の足跡 */
-body::after {
-    bottom: 80px;
-    left: 20px;
-    transform: rotate(-15deg); /* 左向きに傾ける */
+/* 休みの日だけに金色の「●」を付ける */
+.calendar-table .off::after {
+  content: "●";
+  font-size: 8px;
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
-/* Newsセクションを少しオシャレにする */
-.news li {
-  display: flex;
-  transition: 0.3s; /* マウスを乗せた時にふわっとさせる */
-}
-
-.news li:hover {
-  background-color: rgba(212, 175, 55, 0.1); /* ゴールドを薄く背景に */
-  padding-left: 10px; /* 少し右に動く */
-}
+/* 土日の色（お好みで！） */
+.calendar-table tr td:first-child { color: #d9a5b3; } /* 日曜日を少し赤っぽく */
+.calendar-table tr td:last-child { color: #a5b3d9; }  /* 土曜日を少し青っぽく */

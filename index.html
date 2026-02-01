@@ -5,7 +5,7 @@
   <title>MONO COFFEE</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,15 +26,25 @@
         <li><a href="index.html#about">About</a></li>
         <li><a href="menu.html">Menu</a></li>
         <li><a href="access.html">Access</a></li>
+        <li><a href="reservation.html">Reservation</a></li>
       </ul>
     </nav>
     <p>白と黒、静かな時間を楽しむカフェ</p>
   </header>
 
   <section class="hero">
+    <div class="slider">
+      <div class="slide active" style="background-image: url('images/cafe-interior.jpg');"></div>
+      <div class="slide" style="background-image: url('images/hero-bg-1.jpg');"></div>
+      <div class="slide" style="background-image: url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=1000');"></div>
+    </div>
+
     <div class="hero-content">
       <p>パンダのように、ただ、のんびりと。</p>
     </div>
+
+    <button class="slider-prev" id="prevBtn"><i class="fa-solid fa-chevron-left"></i></button>
+    <button class="slider-next" id="nextBtn"><i class="fa-solid fa-chevron-right"></i></button>
   </section>
 
   <main>
