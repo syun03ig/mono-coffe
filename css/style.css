@@ -236,15 +236,16 @@ section {
 }
 
 /* --- 5. メニューレイアウト共通 --- */
-/* 肉球アイコンに一括で隙間を作る */
 .menu-thumb {
   width: 60px;
   height: 60px;
   object-fit: cover;
   border-radius: 50%;
   margin-right: 15px;
-  flex-shrink: 0;
+  flex-shrink: 0; /* これで画像が潰れなくなります */
 }
+
+/* 肉球アイコン（フォントオーサム用） */
 .fa-paw {
   margin-right: 10px;
 }
@@ -252,24 +253,24 @@ section {
 /* メニューのリストを整える */
 .menu-list li {
   display: flex;
-  align-items: center;
+  align-items: center; /* ★ここをcenterにすると画像と文字の高さが揃う */
   margin-bottom: 20px;
-  width: 100%; /* 横幅いっぱい使う */
+  width: 100%;
 }
 
 /* 点線をより安定させる */
 .menu-info {
   flex: 1;
   display: flex;
-  align-items: baseline; /* 文字の高さに合わせる */
+  align-items: center; /* ★ここをbaselineからcenterに変更 */
 }
 
 .menu-list .line {
   flex: 1;
   border-bottom: 1px dotted #ccc;
   margin: 0 10px;
-  height: 1px; /* 高さを固定 */
-  align-self: center; /* 中央に配置 */
+  height: 1px;
+  align-self: center;
 }
 
 /* 値段を少し強調 */
